@@ -1,0 +1,1023 @@
+/* Universal Styles & Font Imports */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Define Ameya's color palette (based on your previous efforts) */
+    --color-primary-beige: #C4AE78; /* Main light beige/brown for elements */
+    --color-secondary-brown: #6F5B3E; /* Deeper brown for accents/text */
+    --color-background-light: #F9F6F0; /* Off-white / very light beige */
+    --color-text-dark: #333; /* Dark text */
+    --color-text-light: #F5F5DC; /* Creamy light text, similar to F9F6F0 but slightly more yellow */
+    --color-accent-red: #E0443D; /* Mimic Yesicca's red */
+    --color-background-name-light: #F5F5DC; /* Very light, almost white for background name */
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: var(--color-text-dark);
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    background-color: var(--color-background-light); /* Default background for all pages */
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--color-secondary-brown); /* Hover color for links */
+}
+
+/* Page Wrapper - for Swup's content replacement. Its children are the actual "pages". */
+.page-wrapper {
+    width: 100vw;
+    height: 100vh; /* Set explicitly for Swup to manage full-viewport transitions */
+    overflow: hidden; /* Critical for controlling transitions and hiding scrollbars during transitions */
+    position: relative; /* Context for absolute children */
+    transition: opacity 0.4s ease-out; /* Default transition for Swup's opacity on the content */
+    opacity: 1; /* Default visible state */
+}
+
+/* Swup adds .is-leaving and .is-rendering to the #swup container (which is .page-wrapper) */
+.is-leaving {
+    opacity: 0; /* Page fades out */
+}
+
+.is-rendering {
+    opacity: 0; /* Keep hidden while new content is being parsed/rendered by Swup */
+}
+
+/* For static pages (about.html, contact.html, projects.html) that scroll - need different overflow */
+.static-page-wrapper {
+    height: auto; /* Allow content to dictate height */
+    min-height: 100vh; /* Ensure it's at least full viewport height */
+    overflow-y: auto; /* Allow scrolling for content longer than viewport */
+    position: relative; /* Overrides absolute on .page for subpages on index.html */
+}
+
+
+/* Base styles for the two main sections on index.html that slide */
+.page {
+    width: 100vw;
+    height: 100vh;
+    position: absolute; /* Absolute positioning for stacking */
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 1s cubic-bezier(0.86, 0, 0.07, 1); /* Smooth transform transition */
+    will-change: transform; /* Hint to browser for performance */
+}
+
+/* Initial state: first page is visible, second page is below */
+.first-page {
+    transform: translateY(0);
+    z-index: 2; /* Ensure first page is on top initially */
+}
+
+.second-page {
+    transform: translateY(100vh); /* Start off-screen below */
+    z-index: 1; /* Below first page */
+}
+
+/* State when second page is active */
+.first-page.hidden {
+    transform: translateY(-100vh); /* Move first page up and out of view */
+}
+
+.second-page.active {
+    transform: translateY(0); /* Move second page into view */
+    z-index: 2; /* Bring second page to top when active */
+}
+
+
+/* ---------------------------------------------------- */
+/* FIRST PAGE: Replica of Yesicca Design */
+/* ---------------------------------------------------- */
+.first-page {
+    background-color: var(--color-background-light); /* Matching your previous background */
+    background-image: url('../assets/images/homepage_background.jpg'); /* Your background image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.first-page-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 4; /* Higher z-index for content container */
+}
+
+.first-page-date {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--color-accent-red); /* Mimicking Yesicca's red */
+    opacity: 0;
+    animation: fadeInText 0.8s ease-out 2.5s forwards;
+    white-space: nowrap;
+    z-index: 6; /* HIGHEST: Ensure this text is on top of everything */
+}
+
+.first-page-quote {
+    position: absolute;
+    top: 17%;
+    left: 11%;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--color-secondary-brown); /* Deeper text color */
+    line-height: 1.4;
+    text-align: left;
+    opacity: 0;
+    animation: fadeInText 0.8s ease-out 2.7s forwards;
+    z-index: 6; /* HIGHEST: Ensure this text is on top of everything */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1); /* Subtle shadow for readability */
+}
+
+.first-page-quote .bold-text {
+    font-weight: 800; /* Make bold parts stand out more */
+    color: var(--color-primary-beige); /* A subtle color shift for bold */
+}
+
+.first-page-name-main {
+    font-family: 'Anton', sans-serif; /* Anton for the big, bold name */
+    font-size: 30vw; /* Responsive large size */
+    color: var(--color-background-name-light); /* Light, background-like color */
+    font-weight: 900;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    z-index: 3; /* This should be behind the hero image and small texts */
+    letter-spacing: -2vw;
+    opacity: 0;
+    animation: fadeInScale 1.2s cubic-bezier(0.23, 1, 0.32, 1) 1.5s forwards; /* Delayed and scaled in */
+}
+
+.first-page-hero-image {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(100vh); /* Start off-screen bottom */
+    width: auto;
+    height: 90vh; /* Adjust height to fill space */
+    object-fit: contain;
+    z-index: 5; /* Image should be above the large name, but below the small texts */
+    filter: drop-shadow(-10px 0 20px rgba(0, 0, 0, 0.4)); /* Match Yesicca's shadow */
+    animation: slideUpHeroImage 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.5s forwards;
+}
+
+@keyframes slideUpHeroImage {
+    to { transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes fadeInScale {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.first-page-bottom-left {
+    position: absolute;
+    bottom: 10%;
+    left: 10%;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-secondary-brown);
+    line-height: 1.2;
+    text-align: left;
+    opacity: 0;
+    animation: fadeInText 0.8s ease-out 2.9s forwards;
+    z-index: 6; /* HIGHEST: Ensure this text is on top of everything */
+}
+
+.first-page-top-right {
+    position: absolute;
+    top: 15%;
+    right: 10%;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-accent-red);
+    opacity: 0;
+    animation: fadeInText 0.8s ease-out 3.1s forwards;
+    white-space: nowrap;
+    z-index: 6; /* HIGHEST: Ensure this text is on top of everything */
+}
+
+.first-page-bottom-right {
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-secondary-brown);
+    line-height: 1.2;
+    text-align: right;
+    opacity: 0;
+    animation: fadeInText 0.8s ease-out 3.3s forwards;
+    z-index: 6; /* HIGHEST: Ensure this text is on top of everything */
+}
+
+@keyframes fadeInText {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* New: Scroll to second page button/indicator */
+.scroll-to-second-page {
+    position: absolute;
+    bottom: 3rem; /* Adjust position as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 60; /* Above all first-page elements */
+    background-color: var(--color-primary-beige);
+    color: var(--color-text-dark);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px; /* Pill shape */
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    opacity: 0; /* Hidden initially, will fade in via JS */
+    animation: fadeInText 0.8s ease-out 4.5s forwards; /* Example animation timing */
+}
+
+.scroll-to-second-page .arrow-down {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.scroll-to-second-page:hover {
+    background-color: var(--color-secondary-brown);
+    color: var(--color-text-light);
+    transform: translateX(-50%) translateY(-5px); /* Slight lift on hover */
+}
+
+.scroll-to-second-page:hover .arrow-down {
+    transform: translateY(3px); /* Move arrow down on hover */
+}
+
+
+/* ---------------------------------------------------- */
+/* SECOND PAGE: Replica of Julia Huang Design */
+/* ---------------------------------------------------- */
+.second-page {
+    background-color: var(--color-background-light); /* Light background for the grid */
+    padding: 2rem;
+    justify-content: flex-start; /* Align content to top */
+    position: absolute; /* Changed back to absolute for the slide transition */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    transform: translateY(100vh); /* Start off-screen below */
+    z-index: 1; /* Below first page initially */
+    transition: transform 1s cubic-bezier(0.86, 0, 0.07, 1); /* Match page transition */
+    will-change: transform;
+}
+
+.second-page.active {
+    transform: translateY(0); /* Move second page into view */
+    z-index: 2; /* Bring second page to top when active */
+}
+
+.second-page-nav {
+    position: fixed; /* Fixed position like Julia Huang's design */
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    background-color: var(--color-primary-beige); /* Matching Julia Huang's nav color */
+    border-radius: 15px;
+    padding: 1.5rem 2.5rem; /* Larger padding for a bolder nav */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.second-page-nav .nav-brand {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: var(--color-text-dark);
+    font-size: 1.4rem;
+}
+
+.second-page-nav nav a {
+    margin-left: 2.5rem;
+    text-decoration: none;
+    color: var(--color-text-dark);
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.second-page-nav nav a:hover {
+    color: var(--color-secondary-brown);
+}
+
+.second-page-grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 2.2fr 1fr;
+    gap: 1.2rem;
+    width: 90%;
+    max-width: 1200px;
+    height: calc(100vh - 10rem); /* Still occupy full viewport minus nav for the grid itself */
+    margin-top: 6rem; /* Space for the fixed nav */
+    opacity: 0; /* Will be animated in by JS */
+    transition: opacity 0.8s ease-out;
+}
+
+.second-page-grid-container.active {
+    opacity: 1;
+}
+
+.grid-item {
+    background-color: var(--color-primary-beige); /* Matching Julia Huang's box color */
+    border-radius: 15px;
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+    position: relative;
+    overflow: hidden;
+    opacity: 0; /* Hidden by default, animated on grid-container.active */
+    transform: translateY(20px); /* Start slightly below */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* Staggered animation delays for grid items */
+.second-page-grid-container.active .grid-item:nth-child(1) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+.second-page-grid-container.active .grid-item:nth-child(2) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+.second-page-grid-container.active .grid-item:nth-child(3) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+.second-page-grid-container.active .grid-item:nth-child(4) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
+.second-page-grid-container.active .grid-item:nth-child(5) { transition-delay: 0.5s; opacity: 1; transform: translateY(0); }
+.second-page-grid-container.active .grid-item:nth-child(6) { transition-delay: 0.6s; opacity: 1; transform: translateY(0); }
+
+
+/* Grid Item Placement and Styling (Mimicking Julia Huang layout) */
+.item-1 {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    justify-content: flex-end; /* Push title to bottom */
+    padding-bottom: 2rem;
+    background-color: var(--color-primary-beige); /* Changed from secondary to primary for consistency with Julia Huang's left top box */
+    color: var(--color-text-dark); /* Changed text color to dark for primary background */
+}
+.grid-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text-dark);
+    line-height: 1.2;
+}
+.icon.flower-icon { /* Replicating Julia Huang's flower icon */
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 40px;
+    height: 40px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%236F5B3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-aperture"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" y1="8" x2="20.05" y2="17.94"></line><line x1="9.69" y1="8" x2="2.35" y2="17.94"></line><line x1="21.58" y1="12" x2="16.35" y2="12"></line><line x1="2.42" y1="12" x2="7.65" y2="12"></line><line x1="10.31" y1="16" x2="3.95" y2="6.06"></line><line x1="13.69" y1="16" x2="20.05" y2="6.06"></line></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+}
+
+.item-2 {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 0;
+    background-color: transparent; /* No background as per Julia Huang screenshot */
+    box-shadow: none; /* No shadow on image container itself */
+}
+.profile-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 10%; /* Adjust to keep face visible */
+    border-radius: 15px; /* Matching Julia Huang's rounded corners */
+}
+
+.item-3 {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+/* IMPORTANT: Adjust Project Thumbnail Size */
+.project-thumbnail {
+    max-width: 80px; /* Adjust as needed */
+    max-height: 80px; /* Adjust as needed */
+    width: auto; /* Maintain aspect ratio */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    display: block;
+    object-fit: contain; /* Ensure entire image is visible */
+    align-self: center; /* Center the thumbnail horizontally */
+}
+.section-heading {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+.project-list {
+    list-style: none;
+    margin-bottom: 1rem;
+}
+.project-list li {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-dark);
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+.project-list li:hover {
+    color: var(--color-secondary-brown);
+    transform: translateX(5px);
+}
+.view-all-projects {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-secondary-brown);
+    align-self: flex-end;
+    margin-top: auto;
+    transition: color 0.3s ease;
+}
+.view-all-projects:hover {
+    color: var(--color-text-dark);
+}
+
+.item-4 {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    background-color: var(--color-background-light); /* Julia Huang's info box color */
+}
+.icon.loader-icon { /* Mimicking Julia Huang's loader icon */
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%236F5B3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rotate-cw"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+    top: 1.5rem; /* Positioning for loader icon */
+    right: 1.5rem; /* Positioning for loader icon */
+}
+.about-short-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    color: var(--color-text-dark);
+    line-height: 1.6;
+}
+
+.item-5 {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    background-color: var(--color-secondary-brown); /* Darker color for contact box */
+    color: var(--color-text-light);
+    justify-content: space-between;
+    align-items: flex-start;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.item-5:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
+.contact-question {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    opacity: 0.8;
+}
+.contact-cta {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    align-self: flex-start;
+}
+.contact-arrow { /* Mimicking Julia Huang's arrow */
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--color-text-light);
+    transition: transform 0.3s ease;
+}
+.item-5:hover .contact-arrow {
+    transform: translate(5px, -5px); /* Move arrow slightly on hover */
+}
+
+.item-6 {
+    grid-column: 3 / 4;
+    grid-row: 2 / 3;
+    display: flex;
+    flex-direction: row; /* Horizontal links */
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.5rem;
+    background-color: var(--color-primary-beige); /* Matching Julia Huang's link box color */
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+}
+.item-6 a {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-dark);
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+.item-6 a:hover {
+    color: var(--color-secondary-brown);
+    transform: translateY(-2px);
+}
+
+
+/* --- Page Transition Curtain --- */
+.page-transition-curtain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--color-secondary-brown); /* Darker brown for the curtain */
+    z-index: 999; /* Ensure it's on top of everything during transition */
+    transform: translateY(100%); /* Start off-screen below */
+    pointer-events: none; /* Do not block clicks */
+    visibility: hidden; /* Hide until needed */
+}
+
+
+/* --- Styles for General Content Pages (About, Projects, Contact) --- */
+.content-area, .projects-page-main {
+    padding-top: 10rem;
+    padding-bottom: 3rem;
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    color: var(--color-text-dark);
+    min-height: calc(100vh - 4rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.styled-box {
+    padding: 2.5rem;
+    border-radius: 15px;
+    background-color: var(--color-primary-beige);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin-bottom: 2rem;
+}
+
+.contact-section.styled-box, .about-section.styled-box {
+    text-align: center;
+}
+
+.contact-section h1, .about-section h1, .projects-page h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-secondary-brown);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.contact-intro {
+    font-size: 1.05rem;
+    margin-bottom: 2rem;
+    max-width: 700px;
+    line-height: 1.7;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contact-info {
+    margin-bottom: 3rem;
+    width: 100%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contact-info h3 {
+    font-size: 1.6rem;
+    color: var(--color-text-dark);
+    margin-bottom: 1rem;
+}
+
+.contact-info p {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.contact-link {
+    color: var(--color-secondary-brown);
+    font-weight: 500;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.contact-link:hover {
+    color: var(--color-accent-red);
+}
+
+.small-text {
+    font-size: 0.85rem;
+    color: #777;
+    margin-top: -0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.social-links-contact {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.social-links-contact a {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-secondary-brown);
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-secondary-brown);
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.social-links-contact a:hover {
+    background-color: var(--color-secondary-brown);
+    color: var(--color-text-light);
+    border-color: var(--color-secondary-brown);
+}
+
+.contact-form-container {
+    width: 100%;
+    max-width: 600px;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contact-form-container h3 {
+    font-size: 1.6rem;
+    color: var(--color-text-dark);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.contact-form .form-group {
+    margin-bottom: 1.2rem;
+}
+
+.contact-form label {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--color-secondary-brown);
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: var(--color-text-dark);
+    background-color: var(--color-background-light);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: var(--color-accent-red);
+    box-shadow: 0 0 0 3px rgba(224, 68, 61, 0.2);
+    outline: none;
+}
+
+.contact-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.submit-button {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--color-secondary-brown);
+    color: var(--color-text-light);
+    border: none;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 2rem;
+}
+
+.submit-button:hover {
+    background-color: var(--color-primary-beige);
+    color: var(--color-text-dark);
+    transform: translateY(-2px);
+}
+
+/* Responsive adjustments for content pages */
+@media (max-width: 768px) {
+    .page-nav {
+        padding: 1rem 1.5rem;
+        top: 1rem;
+        width: 95%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .page-nav nav {
+        margin-top: 0.5rem;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+    .page-nav nav a {
+        margin-left: 0;
+        font-size: 0.9rem;
+    }
+    .content-area {
+        padding-top: 8rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .contact-section h1, .about-section h1, .projects-page h1 { font-size: 2rem; }
+    .contact-intro {
+        font-size: 0.95rem;
+    }
+    .contact-info h3, .contact-form-container h3 {
+        font-size: 1.4rem;
+    }
+    .contact-info p, .social-links-contact a {
+        font-size: 0.9rem;
+    }
+    .contact-form label,
+    .contact-form input,
+    .contact-form textarea,
+    .submit-button {
+        font-size: 0.95rem;
+        padding: 0.7rem;
+    }
+}
+/* --- Styles for Projects Page --- */
+.projects-page-main {
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.projects-grid-section {
+    width: 100%;
+}
+
+.projects-intro {
+    font-size: 1.05rem;
+    margin-bottom: 2.5rem;
+    max-width: 800px;
+    line-height: 1.7;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.projects-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.project-item {
+    background-color: var(--color-background-light);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+.project-grid-thumbnail {
+    max-width: 80px;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    display: block;
+    object-fit: contain;
+    align-self: center;
+}
+
+.project-item h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-secondary-brown);
+    margin-bottom: 0.8rem;
+}
+
+.project-item p {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+.view-project-link {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-accent-red);
+    align-self: flex-end;
+    margin-top: auto;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.view-project-link:hover {
+    color: var(--color-secondary-brown);
+    transform: translateX(3px);
+}
+
+/* Responsive adjustments for Projects Page */
+@media (max-width: 576px) {
+    .projects-grid-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    .project-item {
+        padding: 1.2rem;
+    }
+}
+/* ... (existing CSS) ... */
+
+/* --- Styles for About Page (Sleeker Look) --- */
+.about-page-main {
+    /* Inherits .content-area styles */
+    align-items: center; /* Center the styled-box */
+}
+
+.about-section.styled-box {
+    text-align: left; /* Align text within the section to left */
+    padding: 3rem; /* More padding for a premium feel */
+    width: 100%; /* Take full width of content-area */
+    max-width: 1000px; /* Adjust as needed */
+}
+
+.about-section h1 {
+    font-size: 3rem; /* Larger heading */
+    margin-bottom: 2rem;
+    text-align: center;
+    color: var(--color-secondary-brown);
+}
+
+.about-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns for content */
+    gap: 3rem; /* Space between columns */
+    align-items: start; /* Align content to the top of each column */
+}
+
+.about-intro-text p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-dark);
+}
+
+.about-skills-education h3 {
+    font-size: 1.6rem;
+    color: var(--color-secondary-brown); /* Consistent heading color */
+    margin-top: 2rem; /* Space from previous section */
+    margin-bottom: 1rem;
+}
+
+.about-skills-education .skills-section h3 {
+    margin-top: 0; /* No top margin for the first heading in this column */
+}
+
+.skills-tags-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow tags to wrap to next line */
+    gap: 0.8rem; /* Space between tags */
+    margin-bottom: 2rem;
+}
+
+.skill-tag {
+    background-color: var(--color-background-light); /* Light background for tags */
+    color: var(--color-text-dark);
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap; /* Prevent tags from breaking in half */
+    border: 1px solid var(--color-primary-beige); /* Subtle border */
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.skill-tag:hover {
+    background-color: var(--color-primary-beige);
+    transform: translateY(-2px);
+}
+
+.education-section p {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+/* Responsive adjustments for About Page */
+@media (max-width: 992px) {
+    .about-content-grid {
+        grid-template-columns: 1fr; /* Stack columns on smaller screens */
+        gap: 2rem;
+    }
+    .about-section h1 {
+        font-size: 2.5rem;
+    }
+    .about-section.styled-box {
+        padding: 2.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .about-section h1 {
+        font-size: 2rem;
+    }
+    .about-section.styled-box {
+        padding: 1.5rem;
+    }
+    .about-intro-text p, .education-section p {
+        font-size: 0.9rem;
+    }
+    .skills-tags-container {
+        gap: 0.6rem;
+    }
+    .skill-tag {
+        font-size: 0.85rem;
+        padding: 0.5rem 1rem;
+    }
+}
