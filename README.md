@@ -4,4 +4,4 @@ I'm a student passionate about creating new stuffs and diving into the world of 
 
 Feel free to connect with me and check out my full portfolio:
 
-[**🔗 My Portfolio**]([https://www.your-portfolio-link.com](https://amkbitshift.github.io/portfolio/))
+[**🔗 My Portfolio**](https://amkbitshift.github.io/portfolio/)
